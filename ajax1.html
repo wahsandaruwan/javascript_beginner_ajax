@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax 1 - Text File</title>
+</head>
+<body>
+    <!-- Button -->
+    <button id="btn">Get Text File</button>
+
+    <!-- Text -->
+    <div id="text"></div>
+
+    <!-- JS for Ajax -->
+    <script>
+        // Create Event Listener
+        document.getElementById('btn').addEventListener('click', loadText);
+
+        // Function to get text
+        function loadText(){
+            // Create XHR Object
+            var xhr = new XMLHttpRequest();
+            // console.log(xhr);
+            // Open - type, url/file, async
+            xhr.open('GET', 'sample.txt', true);
+
+            console.log('ReadySate : ', xhr.readyState);
+
+            // Use Onload
+            xhr.onload = function(){
+                console.log('ReadySate : ', xhr.readyState);
+                if(this.status == 200){
+                    // console.log(this.responseText);
+                    document.getElementById('text').innerHTML = this.responseText;
+                }
+                else if(this.status == 404){
+                    document.getElementById('text').innerHTML = "Not Found!";
+                }
+            }
+
+            // Use OnProgress
+            xhr.onprogress = function(){
+                console.log('ReadySate : ', xhr.readyState);
+            }
+
+            // Use OnreadyStateChange
+            xhr.onreadystatechange = function(){
+                console.log('ReadySate : ', xhr.readyState);
+                if(this.readyState == 4 && this.status == 200){
+                    // console.log(this.responseText);
+                }
+            }
+
+            // Use OnError
+            xhr.onerror = function(){
+                console.log("Request Error");
+            }
+
+            // Send
+            xhr.send();
+        }
+
+        // Ready State Values
+        // 0 : Request not initialized
+        // 1 : Server Connection Established
+        // 2 : Request recieved
+        // 3 : Processing Request
+        // 4 : Request finished and Response is Ready
+
+        // HTTP Statuses
+        // 200 : OK
+        // 300 : Not Modified
+        // 403 : Forbidden
+        // 404 : Not Found
+    </script>
+</body>
+</html>

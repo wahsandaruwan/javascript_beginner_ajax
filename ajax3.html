@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax 3 - Ajax and PHP Forms</title>
+</head>
+<body>
+    <!-- GET Method -->
+    <!-- Button -->
+    <button id="btn1">Get Name</button>
+
+    <!-- Form -->
+    <hr>
+    <h1>Without AJAX GET Form</h1>
+    <form action="process.php" method="GET">
+        <input type="text" name="name" id="">
+        <input type="submit" value="Submit">
+    </form>
+
+    <h1>With AJAX GET Form</h1>
+    <form id="frm1">
+        <input type="text" name="name1" id="name1">
+        <input type="submit" value="Submit">
+    </form>
+
+    <!-- POST Method -->
+    <h1>Without AJAX POST Form</h1>
+    <form action="process.php" method="POST">
+        <input type="text" name="name" id="">
+        <input type="submit" value="Submit">
+    </form>
+
+    <h1>With AJAX POST Form</h1>
+    <form id="frm2">
+        <input type="text" name="name2" id="name2">
+        <input type="submit" value="Submit">
+    </form>
+
+    <!-- JS for Ajax -->
+    <script>
+        // ----GET----- Method---
+        // Event for Button 
+        document.getElementById('btn1').addEventListener('click', getName);
+
+        // Function to get name when press a button with GET Method
+        function getName(){
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'process.php?name=kasun', true);
+
+            xhr.onload = function(){
+                console.log(this.responseText);
+            }
+
+            xhr.send();
+        }
+
+        // Event for form
+        document.getElementById('frm1').addEventListener('submit', getNameNew);
+        
+        // Function to get name from form with GET Method
+        function getNameNew(event){
+            // Stop default action of form
+            event.preventDefault();
+
+            // Get name from form
+            var name = document.getElementById('name1').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'process.php?name='+name, true);
+
+            xhr.onload = function(){
+                console.log(this.responseText);
+            }
+
+            xhr.send();
+        }
+
+        // ----POST----- Method---
+
+        // Event for form
+        document.getElementById('frm2').addEventListener('submit', postNameNew);
+
+        function postNameNew(event){
+            // Stop default action of form
+            event.preventDefault();
+
+            // Get name from form
+            var name = document.getElementById('name2').value;
+            // Set params
+            var params = "name="+name;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'process.php', true);
+
+            // Set request header
+            xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+
+            xhr.onload = function(){
+                console.log(this.responseText);
+            }
+
+            xhr.send(params);
+        }
+    </script>
+</body>
+</html>
